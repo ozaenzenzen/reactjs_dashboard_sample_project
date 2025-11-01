@@ -1,21 +1,51 @@
-import { createBrowserRouter, RouterProvider, Outlet, Link } from "react-router-dom";
+// src/layouts/RootLayout.tsx
+import { Outlet, Link, useNavigate } from "react-router-dom";
 
-const RootLayout = () => {
+export default function RootLayout() {
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    navigate("/login");
+  };
+
   return (
-    <div>
-      <header style={{ padding: "10px", background: "#282c34" }}>
-        <nav style={{ display: "flex", gap: "15px" }}>
-          <Link to="/" style={{ color: "#fff" }}>Home</Link>
-          <Link to="/login" style={{ color: "#fff" }}>Login</Link>
-          <Link to="/register" style={{ color: "#fff" }}>Register</Link>
-          <Link to="/dashboard" style={{ color: "#fff" }}>Dashboard</Link>
-        </nav>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <Link to="/" className="text-xl font-bold text-indigo-600">
+            MyApp
+          </Link>
+          <nav className="flex gap-4 items-center">
+            {!isLoggedIn ? (
+              <>
+                <Link to="/login" className="text-sm text-gray-700 hover:text-indigo-600">
+                  Login
+                </Link>
+                <Link to="/register" className="text-sm text-gray-700 hover:text-indigo-600">
+                  Register
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/dashboard" className="text-sm text-gray-700 hover:text-indigo-600">
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-sm text-red-600 hover:text-red-700"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </nav>
+        </div>
       </header>
-      <main style={{ padding: "20px" }}>
+      <main>
         <Outlet />
       </main>
     </div>
   );
 }
-
-export default RootLayout;

@@ -1,8 +1,29 @@
-import { createBrowserRouter, RouterProvider, Outlet, Link } from "react-router-dom";
+// src/layouts/DashboardLayout.tsx
+import { NavLink, Outlet } from "react-router-dom";
 
-const DashboardLayout = () => {
+type NavItem = {
+  to: string;
+  label: string;
+  end?: boolean;
+};
+
+const navItems: readonly NavItem[] = [
+  { to: "/dashboard", label: "Overview", end: true },
+  { to: "/dashboard/analytics", label: "Analytics" },
+  { to: "/dashboard/reports", label: "Reports" },
+  { to: "/dashboard/customers", label: "Customers" },
+  { to: "/dashboard/new-customer", label: "New Customer" },
+  { to: "/dashboard/verified-customers", label: "Verified Customers" },
+  { to: "/dashboard/products", label: "Products" },
+  { to: "/dashboard/new-product", label: "New Product" },
+  { to: "/dashboard/inventory", label: "Inventory" },
+  { to: "/dashboard/settings", label: "Settings" },
+] as const;
+
+export default function DashboardLayout() {
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      {/* ---------- Sidebar ---------- */}
       <aside
         style={{
           width: "200px",
@@ -13,23 +34,29 @@ const DashboardLayout = () => {
           gap: "10px",
         }}
       >
-        <Link to="/dashboard">Overview</Link>
-        <Link to="/dashboard/analytics">Analytics</Link>
-        <Link to="/dashboard/reports">Reports</Link>
-        <Link to="/dashboard/customers">Customers</Link>
-        <Link to="/dashboard/new-customer">New Customer</Link>
-        <Link to="/dashboard/verified-customers">Verified Customers</Link>
-        <Link to="/dashboard/products">Products</Link>
-        <Link to="/dashboard/new-product">New Product</Link>
-        <Link to="/dashboard/inventory">Inventory</Link>
-        <Link to="/dashboard/settings">Settings</Link>
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.end}
+            style={({ isActive }: { isActive: boolean }) => ({
+              padding: "8px 12px",
+              borderRadius: "4px",
+              background: isActive ? "#e0e0e0" : "transparent",
+              fontWeight: isActive ? "600" : "normal",
+              color: isActive ? "#333" : "#555",
+              textDecoration: "none",
+            })}
+          >
+            {item.label}
+          </NavLink>
+        ))}
       </aside>
 
-      <section style={{ padding: "20px", flex: 1 }}>
+      {/* ---------- Main Content ---------- */}
+      <section style={{ padding: "20px", flex: 1, background: "#fff" }}>
         <Outlet />
       </section>
     </div>
   );
 }
-
-export default DashboardLayout;
