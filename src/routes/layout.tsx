@@ -20,16 +20,25 @@ export default function RootLayout() {
           <nav className="flex gap-4 items-center">
             {!isLoggedIn ? (
               <>
-                <Link to="/login" className="text-sm text-gray-700 hover:text-indigo-600">
-                  Login
+                <Link
+                  to="/login"
+                  className="text-sm text-gray-700 hover:text-indigo-600"
+                >
+                  Logins
                 </Link>
-                <Link to="/register" className="text-sm text-gray-700 hover:text-indigo-600">
+                <Link
+                  to="/register"
+                  className="text-sm text-gray-700 hover:text-indigo-600"
+                >
                   Register
                 </Link>
               </>
             ) : (
               <>
-                <Link to="/dashboard" className="text-sm text-gray-700 hover:text-indigo-600">
+                <Link
+                  to="/dashboard"
+                  className="text-sm text-gray-700 hover:text-indigo-600"
+                >
                   Dashboard
                 </Link>
                 <button
@@ -43,8 +52,10 @@ export default function RootLayout() {
           </nav>
         </div>
       </header>
-      <main>
-        <Outlet />
+      <main className="flex-1 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

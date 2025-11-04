@@ -13,27 +13,27 @@ export default function RegisterPage() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow">
-      <h1 className="text-2xl font-bold mb-6">Register</h1>
+      <h1 className="text-2xl font-bold mb-6 text-indigo-500">Register</h1>
       <Form method="post">
         <input
           name="name"
           placeholder="Full Name"
           required
-          className="w-full p-3 mb-4 border rounded"
+          className="w-full p-3 mb-4 border rounded text-gray-500"
         />
         <input
           name="email"
           type="email"
           placeholder="Email"
           required
-          className="w-full p-3 mb-4 border rounded"
+          className="w-full p-3 mb-4 border rounded text-gray-500"
         />
         <input
           name="password"
           type="password"
           placeholder="Password"
           required
-          className="w-full p-3 mb-4 border rounded"
+          className="w-full p-3 mb-4 border rounded text-gray-500"
         />
         <button
           type="submit"
@@ -43,7 +43,7 @@ export default function RegisterPage() {
         </button>
       </Form>
       {error && <p className="text-red-600 mt-4">{error}</p>}
-      <p className="mt-4 text-sm text-center">
+      <p className="mt-4 text-sm text-center text-black">
         Have an account? <Link to="/login" className="text-indigo-600">Login</Link>
       </p>
     </div>
