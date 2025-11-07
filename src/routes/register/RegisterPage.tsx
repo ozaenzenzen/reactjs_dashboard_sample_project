@@ -12,7 +12,7 @@ export default function RegisterPage() {
   const error = useActionData() as string | undefined;
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow">
+    <div className="mx-auto mt-10 p-6 bg-white rounded-lg shadow">
       <h1 className="text-2xl font-bold mb-6 text-indigo-500">Register</h1>
       <Form method="post">
         <input

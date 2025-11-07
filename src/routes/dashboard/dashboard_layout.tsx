@@ -23,7 +23,7 @@ const navItems: readonly NavItem[] = [
 // src/layouts/DashboardLayout.tsx
 export default function DashboardLayout() {
   return (
-    <div className="flex min-h-screen">
+    <div className="w-full flex min-h-screen">
       {/* Sidebar */}
       <aside className="w-52 bg-gray-100 p-4 flex flex-col gap-2">
         {navItems.map((item) => (
@@ -46,7 +46,7 @@ export default function DashboardLayout() {
 
       {/* Main Content */}
       <section className="flex-1 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Outlet />
         </div>
       </section>

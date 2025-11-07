@@ -36,7 +36,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Add more sections to fill width */}
-      <div className="bg-gray-50 p-6 rounded-lg">
+      <div className="w-full bg-gray-50 p-6 rounded-lg">
         <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
         <p className="text-gray-600">No recent activity.</p>
       </div>
