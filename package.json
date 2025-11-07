@@ -7,11 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "PORT=5174 react-scripts start"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.16",
     "clsx": "^2.1.1",
+    "lucide-react": "^0.553.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.5",

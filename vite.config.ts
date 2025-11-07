@@ -8,4 +8,9 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
+  server: {
+    port: 5174,
+    strictPort: true, // Optional: fail if port is already in use
+    open: true, // Optional: open browser on start
+  }
 })
