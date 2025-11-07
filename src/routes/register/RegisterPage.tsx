@@ -50,47 +50,31 @@ export default function RegisterPage() {
           </div>
 
           {/* Password */}
-          <div className="">
+          <div className="flex flex-col items-start">
+            {/* <div className="flex items-center border rounded-lg overflow-hidden mb-4 focus-within:ring-2 focus-within:ring-purple-500"> */}
             <label
               htmlFor="password"
               className="font-medium text-gray-700 mb-2 flex flex-col items-start"
             >
               Password
             </label>
-            <input
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              required
-              className="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 focus:ring-purple-500 outline-none text-gray-700"
-            />
-            <div className="flex flex-col items-end">
+            <div className="flex w-full border rounded-lg overflow-hidden mb-4 focus:ring-2 focus-within:ring-2 focus-within:ring-purple-500 text-gray-700">
+              <input
+                name="password"
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                required
+                className="flex-1 px-4 py-3 text-gray-700 bg-transparent outline-none"
+              />
               <button
                 type="button"
-                className="text-gray-500 mb-3 hover:text-gray-900"
                 onClick={() => setShowPassword(!showPassword)}
+                className="px-3 text-gray-400 hover:text-gray-700 bg-transparent"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
-          </div>
-
-          <div className="flex items-center border rounded-lg overflow-hidden mb-4 focus-within:ring-2 focus-within:ring-purple-500">
-            <input
-              name="password"
-              id="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              required
-              className="flex-1 px-4 py-3 text-gray-700 bg-transparent outline-none"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="px-3 text-gray-400 hover:text-gray-700 bg-transparent"
-            >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-            </button>
           </div>
 
           {/* Terms */}
