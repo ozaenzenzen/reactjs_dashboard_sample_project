@@ -47,7 +47,7 @@ function RootLayout() {
   // src/layouts/RootLayout.tsx
   return (
     <div className="min-h-screen min-w-screen flex-col bg-gray-50">
-      <header className="bg-white shadow-sm border-b">
+      <header className="fixed w-full bg-white shadow-sm border-b">
         <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4">
           <Link to="/" className="text-xl font-bold text-indigo-600">
             MyApp
