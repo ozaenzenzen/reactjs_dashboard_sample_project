@@ -7,88 +7,112 @@ import {
   redirect,
 } from "react-router-dom";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 function LoginPage() {
   const error = useActionData() as string | undefined;
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirect");
 
-  // return (
-  //   <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-  //     <div className="w-full max-w-md">
-  //       <div className="bg-white rounded-lg shadow-xl p-8">
-  //         <div className="text-center mb-8">
-  //           <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-  //           <p className="text-gray-600">Sign in to your account</p>
-  //         </div>
+  const [showPassword, setShowPassword] = useState(false);
 
-  //         <Form method="post" className="space-y-6">
-  //           {redirect && (
-  //             <input type="hidden" name="redirect" value={redirect} />
-  //           )}
+  return (
+    <div className="min-h-screen bg-gray-50 flex justify-center items-center p-6">
+      <div className="w-full max-w-6xl bg-white rounded-3xl shadow-md grid grid-cols-2 overflow-hidden">
+        {/* {Left Section} */}
+        <div className="p-10 flex flex-col justify-center">
+          <h1 className="p-10 text-2xl font-bold mb-8 text-indigo-500">
+            Login
+          </h1>
 
-  //           <div>
-  //             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-  //               Email Address
-  //             </label>
-  //             <input
-  //               type="email"
-  //               id="email"
-  //               name="email"
-  //               required
-  //               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-  //               placeholder="you@example.com"
-  //             />
-  //           </div>
+          <Form
+            method="post"
+            action={`/login${redirectTo ? `?redirect=${redirectTo}` : ""}`}
+          >
+            {/* Email */}
+            <div className="flex flex-col items-start">
+              <label htmlFor="email" className="font-medium text-gray-700 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                defaultValue="user@example.com"
+                className="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 focus:ring-purple-500 outlinenon text-gray-700"
+              />
+            </div>
 
-  //           <div>
-  //             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-  //               Password
-  //             </label>
-  //             <input
-  //               type="password"
-  //               id="password"
-  //               name="password"
-  //               required
-  //               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-  //               placeholder="••••••••"
-  //             />
-  //           </div>
+            {/* Password */}
+            <div className="flex flex-col items-start">
+              <label
+                htmlFor="password"
+                className="font-medium text-gray-700 mb-2 flex flex-col items-start"
+              >
+                Password
+              </label>
+              <div className="flex w-full border rounded-lg overflow-hidden mb-4 focus:ring-2 focus-within:ring-2 focus-within:ring-purple-500 text-gray-700">
+                <input
+                  name="password"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  defaultValue="password"
+                  required
+                  className="flex-1 px-4 py-3 text-gray-700 bg-transparent outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="px-3 text-gray-400 hover:text-gray-700 bg-transparent"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
 
-  //           <div className="flex items-center justify-between">
-  //             <label className="flex items-center">
-  //               <input
-  //                 type="checkbox"
-  //                 name="remember"
-  //                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-  //               />
-  //               <span className="ml-2 text-sm text-gray-600">Remember me</span>
-  //             </label>
-  //             <a href="#" className="text-sm text-blue-600 hover:text-blue-700">
-  //               Forgot password?
-  //             </a>
-  //           </div>
+            {/* Checkbox */}
+            <div className="flex items-center justify-right">
+              <label className="flex items-center"></label>
+              <input
+                type="checkbox"
+                name="remember"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-50"
+              />
+              <span className="ml-2 text-sm text-gray-600">Remember Me</span>
+            </div>
+            <div className="mb-6"></div>
 
-  //           <button
-  //             type="submit"
-  //             className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium transition"
-  //           >
-  //             Sign In
-  //           </button>
-  //         </Form>
+            {/* Button */}
+            <button
+              type="submit"
+              className="bg-purple-600 text-white w-full py-3 rounded-lg font-medium hover:bg-purple-700 transition"
+            >
+              Login
+            </button>
+          </Form>
 
-  //         <div className="mt-6 text-center">
-  //           <p className="text-sm text-gray-600">
-  //             Don't have an account?{' '}
-  //             <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
-  //               Sign up
-  //             </Link>
-  //           </p>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
+          {error && <p className="text-red-600 mt-4 text-sm">{error}</p>}
+        </div>
+
+        {/* Right Section */}
+        <div className="bg-purple-600 text-white flex flex-col justify-center items-center p-10 text-center">
+          <h3 className="text-3xl font-bold leading-tight mb-8">
+            Very good works are
+            <br />
+            waiting for you
+            <br />
+            Sign In Now
+          </h3>
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvcAwRhmH89etSpLz71QohJBBMaaPYoUbxfQ&s"
+            alt="Welcome"
+            className="w-64 md:w-80"
+          />
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="w-full min-w-screen flex items-center justify-center">
