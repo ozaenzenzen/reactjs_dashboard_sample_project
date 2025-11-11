@@ -93,6 +93,14 @@ function LoginPage() {
           </Form>
 
           {error && <p className="text-red-600 mt-4 text-sm">{error}</p>}
+
+          <p className="text-sm text-gray-600 mt-4">
+            No Account?
+            {" "}
+            <Link to="/register" className="text-purple-600 font-medium hover:underline">
+              Register
+            </Link>
+          </p>
         </div>
 
         {/* Right Section */}
