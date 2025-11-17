@@ -16,18 +16,36 @@ function LoginPage() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  // return (
+  //   <div className="flex flex-col md:flex-row gap-6 max-w-7xl mx-auto px-4">
+  //     <div className="w-full md:max-w-[50%] lg:max-w-[580px] flex-shrink-0">
+  //       <div className="bg-white rounded-xl shadow-lg p-8">
+  //         <h2 className="text-2xl font-bold">Left Side</h2>
+  //         <p>Content here...</p>
+  //       </div>
+  //     </div>
+
+  //     <div className="w-full md:max-w-[50%] lg:max-w-[580px] flex-shrink-0">
+  //       <div className="bg-white rounded-xl shadow-lg p-8">
+  //         <h2 className="text-2xl font-bold">Right Side</h2>
+  //         <p>Content here...</p>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center items-center p-6">
-      <div className="w-full max-w-6xl bg-white rounded-3xl shadow-md grid grid-cols-2 overflow-hidden">
+    <div className="">
+      {/* <div className="h-screen w-full bg-white shadow-md grid grid-cols-2 overflow-hidden"> */}
+      <div className="h-screen bg-white shadow-md flex flex-row overflow-hidden">
         {/* {Left Section} */}
-        <div className="p-10 flex flex-col justify-center">
-          <h1 className="p-10 text-2xl font-bold mb-8 text-indigo-500">
-            Login
-          </h1>
+        <div className="p-[120px] flex flex-col justify-center">
+          <h1 className="text-2xl font-bold mb-8 text-[#6E39CB]">Login</h1>
 
           <Form
             method="post"
             action={`/login${redirectTo ? `?redirect=${redirectTo}` : ""}`}
+            className="w-[330px]"
           >
             {/* Email */}
             <div className="flex flex-col items-start">
@@ -39,7 +57,7 @@ function LoginPage() {
                 name="email"
                 placeholder="Email"
                 defaultValue="user@example.com"
-                className="w-full border rounded-lg px-4 py-3 mb-4 focus:ring-2 focus:ring-purple-500 outlinenon text-gray-700"
+                className="w-full bg-[#F4F5F9] border border-[#DBDCDE] rounded-lg px-4 py-3 mb-4 focus:ring-2 focus:ring-purple-500 outline-none text-gray-700"
               />
             </div>
 
@@ -51,7 +69,7 @@ function LoginPage() {
               >
                 Password
               </label>
-              <div className="flex w-full border rounded-lg overflow-hidden mb-4 focus:ring-2 focus-within:ring-2 focus-within:ring-purple-500 text-gray-700">
+              <div className="flex bg-[#F4F5F9] w-full border border-[#DBDCDE] rounded-lg overflow-hidden mb-4 focus:ring-2 focus-within:ring-2 focus-within:ring-purple-500 text-gray-700">
                 <input
                   name="password"
                   id="password"
@@ -64,7 +82,7 @@ function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="px-3 text-gray-400 hover:text-gray-700 bg-transparent"
+                  className="px-3 text-gray-400 border border-none hover:text-gray-700 bg-transparent"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -86,7 +104,7 @@ function LoginPage() {
             {/* Button */}
             <button
               type="submit"
-              className="bg-purple-600 text-white w-full py-3 rounded-lg font-medium hover:bg-purple-700 transition"
+              className="bg-[#6E39CB] text-white w-full py-3 rounded-lg font-medium hover:bg-[#6E39CB] transition"
             >
               Login
             </button>
@@ -95,16 +113,18 @@ function LoginPage() {
           {error && <p className="text-red-600 mt-4 text-sm">{error}</p>}
 
           <p className="text-sm text-gray-600 mt-4">
-            No Account?
-            {" "}
-            <Link to="/register" className="text-purple-600 font-medium hover:underline">
+            No Account?{" "}
+            <Link
+              to="/register"
+              className="text-[#6E39CB] font-medium hover:underline"
+            >
               Register
             </Link>
           </p>
         </div>
 
         {/* Right Section */}
-        <div className="bg-purple-600 text-white flex flex-col justify-center items-center p-10 text-center">
+        <div className="w-full rounded-3xl bg-[#6E39CB] text-white flex flex-col justify-center items-center my-5 mr-5 text-center">
           <h3 className="text-3xl font-bold leading-tight mb-8">
             Very good works are
             <br />

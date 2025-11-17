@@ -11,42 +11,19 @@ function RootLayout() {
     navigate("/login");
   };
 
-  // const [count, setCount] = useState(0)
+  var layout = (
+    <div className="h-screen min-w-screen flex flex-col bg-gray-50">
+      {/* <main className=""> */}
+        <div className="">
+          <Outlet />
+        </div>
+      {/* </main> */}
+    </div>
+  );
+  return layout;
 
-  // return (
-  //   <div className="min-h-screen min-w-screen bg-blue-500">
-  //     <div>
-  //       <a href="https://vite.dev" target="_blank">
-  //         {/* <img src={viteLogo} className="logo" alt="Vite logo" /> */}
-  //       </a>
-  //       <a href="https://react.dev" target="_blank">
-  //         {/* <img src={reactLogo} className="logo react" alt="React logo" /> */}
-  //       </a>
-  //     </div>
-  //     <h1>Vite + React</h1>
-  //     <div className="card">
-  //       <button onClick={() => setCount((count) => count + 1)}>
-  //         count is {count}
-  //       </button>
-  //       <p>
-  //         Edit <code>src/App.tsx</code> and save to test HMR
-  //       </p>
-  //     </div>
-  //     <p className="read-the-docs">
-  //       Click on the Vite and React logos to learn more
-  //     </p>
-  //   </div>
-  // )
-
-  // return (
-  //   <div className="w-full min-h-screen bg-gray-50">
-  //     <Outlet />
-  //   </div>
-  // );
-
-  // src/layouts/RootLayout.tsx
   return (
-    <div className="min-h-screen min-w-screen flex-col bg-gray-50">
+    <div className="min-h-screen min-w-screen flex flex-col bg-gray-50">
       <header className="fixed w-full bg-white shadow-sm border-b">
         <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4">
           <Link to="/" className="text-xl font-bold text-indigo-600">
