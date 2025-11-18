@@ -39,7 +39,7 @@ function LoginPage() {
       {/* <div className="h-screen w-full bg-white shadow-md grid grid-cols-2 overflow-hidden"> */}
       <div className="h-screen bg-white shadow-md flex flex-row overflow-hidden">
         {/* {Left Section} */}
-        <div className="p-[120px] flex flex-col justify-center">
+        <div className="mx-auto max-w-md h-full flex flex-col justify-center items-center">
           <h1 className="text-2xl font-bold mb-8 text-[#6E39CB]">Login</h1>
 
           <Form
@@ -90,16 +90,25 @@ function LoginPage() {
             </div>
 
             {/* Checkbox */}
-            <div className="flex items-center justify-right">
-              <label className="flex items-center"></label>
-              <input
-                type="checkbox"
-                name="remember"
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-50"
-              />
-              <span className="ml-2 text-sm text-gray-600">Remember Me</span>
+            <div className="justify-between flex flex-row mb-[26px]">
+              {/* Checkbox remember me */}
+              <div className="flex items-center justify-right">
+                <label className="flex items-center"></label>
+                <input
+                  type="checkbox"
+                  name="remember"
+                  className="w-4 h-4 accent-[#6E39CB] text-[#6E39CB] checked:bg-[#6E39CB] checked:border-[#6E39CB] border-gray-300 rounded focus:ring-[#6E39CB]"
+                />
+                <span className="ml-2 text-sm text-gray-600">Remember Me</span>
+              </div>
+              <div className="mb-6"></div>
+              {/* Forgot password */}
+              <div>
+                <h2 className="text-sm text-[#6E39CB]">
+                  <a href="#">Forgot Password</a>
+                </h2>
+              </div>
             </div>
-            <div className="mb-6"></div>
 
             {/* Button */}
             <button
@@ -112,8 +121,8 @@ function LoginPage() {
 
           {error && <p className="text-red-600 mt-4 text-sm">{error}</p>}
 
-          <p className="text-sm text-gray-600 mt-4">
-            No Account?{" "}
+          <p className="text-sm text-[#89868D] mt-4">
+            Don't have an account?{" "}
             <Link
               to="/register"
               className="text-[#6E39CB] font-medium hover:underline"
@@ -124,7 +133,8 @@ function LoginPage() {
         </div>
 
         {/* Right Section */}
-        <div className="w-full rounded-3xl bg-[#6E39CB] text-white flex flex-col justify-center items-center my-5 mr-5 text-center">
+        <div className="hidden lg:flex flex-col lg:w-3/5 rounded-3xl bg-[#6E39CB] text-white justify-center items-center my-5 mr-5 text-center">
+          {/* <div className="items-center hidden w-full h-full lg:w-1/2 bg-brand-950 dark:bg-white/5 lg:grid"> */}
           <h3 className="text-3xl font-bold leading-tight mb-8">
             Very good works are
             <br />

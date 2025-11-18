@@ -19,7 +19,7 @@ export default function RegisterPage() {
     <div className="">
       <div className="h-screen bg-white rounded-3xl shadow-md flex flex-row overflow-hidden">
         {/* Left Section */}
-        <div className="p-[120px] flex flex-col justify-center">
+        <div className="mx-auto max-w-md h-full flex flex-col justify-center">
           <h1 className="text-2xl font-bold mb-8 text-[#6E39CB]">Register</h1>
 
           <div className="w-[330px]">
@@ -110,7 +110,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Right Section */}
-        <div className="w-full rounded-3xl bg-[#6E39CB] text-white flex flex-col justify-center items-center my-5 mr-5 text-center">
+        <div className="hidden lg:flex flex-col lg:w-3/5 rounded-3xl bg-[#6E39CB] text-white justify-center items-center my-5 mr-5 text-center">
           <h3 className="text-3xl font-bold leading-tight mb-8">
             Very good works are
             <br />
