@@ -3,6 +3,9 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { useState } from "react";
 import { Menu, Bell, Search, User, LogOut, Settings } from "lucide-react"; // optional: lucide icons
 import { useNavigate } from "react-router-dom";
+import AppHeader from "./AppHeader";
+import Header from "./Header";
+import HeaderV2 from "./Header";
 
 type NavItem = {
   to: string;
@@ -43,7 +46,9 @@ export default function DashboardLayout() {
             <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
               <span className="text-white text-2xl font-bold">M</span>
             </div>
-            <span className="text-xl font-semibold text-gray-900">Dashboard</span>
+            <span className="text-xl font-semibold text-gray-900">
+              Dashboard
+            </span>
           </div>
         </div>
 
@@ -55,9 +60,10 @@ export default function DashboardLayout() {
               to={item.to}
               end={item.end}
               className={({ isActive }) =>
-                `group relative flex items-center gap-3 px-4 py-3 my-1 rounded-xl text-sm font-medium transition-all ${isActive
-                  ? "bg-purple-50 text-purple-700 shadow-sm"
-                  : "text-gray-600 hover:bg-gray-50"
+                `group relative flex items-center gap-3 px-4 py-3 my-1 rounded-xl text-sm font-medium transition-all ${
+                  isActive
+                    ? "bg-purple-50 text-purple-700 shadow-sm"
+                    : "text-gray-600 hover:bg-gray-50"
                 }`
               }
             >
@@ -90,7 +96,9 @@ export default function DashboardLayout() {
                   AC
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-900">Anita Cruz</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    Anita Cruz
+                  </p>
                   <p className="text-xs text-gray-500">anita@commerce.com</p>
                 </div>
               </div>
@@ -116,7 +124,8 @@ export default function DashboardLayout() {
                 <hr className="my-2 border-gray-200" />
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition">
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition"
+                >
                   <LogOut className="w-4 h-4" />
                   Logout
                 </button>
@@ -137,23 +146,7 @@ export default function DashboardLayout() {
       {/* Main Layout */}
       <div className="flex-1 ml-64">
         {/* Header */}
-        <header className="fixed top-0 left-64 right-0 h-16 bg-white border-b border-gray-200 z-10 flex items-center justify-between px-8">
-          <div className="flex items-center gap-8">
-            <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-          </div>
-
-          {/* Search Bar */}
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search anything here..."
-                className="pl-10 pr-4 py-2 w-80 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-white transition-all"
-              />
-            </div>
-          </div>
-        </header>
+        <HeaderV2></HeaderV2>
 
         {/* Page Content */}
         <main className="mt-16 p-8">
@@ -178,7 +171,9 @@ export default function DashboardLayout() {
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
               D
             </div>
-            <span className="font-semibold text-xl hidden sm:block text-gray-500">Dashboard</span>
+            <span className="font-semibold text-xl hidden sm:block text-gray-500">
+              Dashboard
+            </span>
           </div>
         </div>
 
@@ -209,24 +204,33 @@ export default function DashboardLayout() {
               <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
                 JD
               </div>
-              <span className="hidden md:block text-sm font-medium text-gray-500">John Doe</span>
+              <span className="hidden md:block text-sm font-medium text-gray-500">
+                John Doe
+              </span>
             </button>
 
             {/* Dropdown */}
             {showUserMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
-                <a href="/dashboard/profile" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-sm">
+                <a
+                  href="/dashboard/profile"
+                  className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-sm"
+                >
                   <User className="w-4 h-4" />
                   Profile
                 </a>
-                <a href="/dashboard/settings" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-sm">
+                <a
+                  href="/dashboard/settings"
+                  className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-sm"
+                >
                   <Settings className="w-4 h-4" />
                   Settings
                 </a>
                 <hr className="my-2" />
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-sm text-red-600 w-full text-left">
+                  className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-sm text-red-600 w-full text-left"
+                >
                   <LogOut className="w-4 h-4" />
                   Logout
                 </button>
@@ -244,9 +248,10 @@ export default function DashboardLayout() {
             to={item.to}
             end={item.end}
             className={({ isActive }) =>
-              `px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive
-                ? "bg-gray-300 text-gray-900 font-semibold shadow-sm"
-                : "text-gray-600 hover:bg-gray-200"
+              `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive
+                  ? "bg-gray-300 text-gray-900 font-semibold shadow-sm"
+                  : "text-gray-600 hover:bg-gray-200"
               }`
             }
           >
@@ -267,9 +272,7 @@ export default function DashboardLayout() {
     <div className="w-full flex min-h-screen">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-50 z-50 flex items-center justify-between px-4 lg:px-6">
-        <div>
-
-        </div>
+        <div></div>
       </header>
       {/* Sidebar */}
       <aside className="w-52 bg-gray-100 p-4 flex flex-col gap-2">
@@ -279,9 +282,10 @@ export default function DashboardLayout() {
             to={item.to}
             end={item.end}
             className={({ isActive }) =>
-              `px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive
-                ? "bg-gray-300 text-gray-900 font-semibold"
-                : "text-gray-600 hover:bg-gray-200"
+              `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive
+                  ? "bg-gray-300 text-gray-900 font-semibold"
+                  : "text-gray-600 hover:bg-gray-200"
               }`
             }
           >
