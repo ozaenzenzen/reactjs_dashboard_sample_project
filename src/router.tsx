@@ -71,6 +71,8 @@ const router = createBrowserRouter([
             element: <h1 className="title">New Product</h1>,
           },
           { path: "inventory", element: <h1 className="title">Inventory</h1> },
+          { path: "event-management", element: <h1 className="title">Event Management</h1> },
+          { path: "user-management", element: <h1 className="title">User Management</h1> },
           { path: "settings", element: <h1 className="title">Settings</h1> },
         ],
       },
