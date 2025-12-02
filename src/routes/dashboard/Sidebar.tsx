@@ -14,6 +14,7 @@ import {
   PersonStanding,
   BoxIcon,
   Settings2,
+  ChevronDown,
 } from "lucide-react"; // optional: lucide icons
 
 type NavItem = {
@@ -51,11 +52,14 @@ const navItems: NavItem[] = [
     to: "/dashboard/event-management",
     label: "Event Management",
     subItems: [
-      {to: "/dashboard/event-management/configuration", label: "Configuration"},
-      {to: "/dashboard/event-management/category", label: "Category"},
-      {to: "/dashboard/event-management/publish", label: "Publish"},
-      {to: "/dashboard/event-management/report", label: "Report"},
-      {to: "/dashboard/event-management/live", label: "Live"},
+      {
+        to: "/dashboard/event-management/configuration",
+        label: "Configuration",
+      },
+      { to: "/dashboard/event-management/category", label: "Category" },
+      { to: "/dashboard/event-management/publish", label: "Publish" },
+      { to: "/dashboard/event-management/report", label: "Report" },
+      { to: "/dashboard/event-management/live", label: "Live" },
     ],
   },
   {
@@ -63,8 +67,8 @@ const navItems: NavItem[] = [
     to: "/dashboard/user-management",
     label: "User Management",
     subItems: [
-      {to: "/dashboard/user-management/user", label: "User"},
-      {to: "/dashboard/user-management/role", label: "Role"},
+      { to: "/dashboard/user-management/user", label: "User" },
+      { to: "/dashboard/user-management/role", label: "Role" },
     ],
   },
   { icon: <Settings2 />, to: "/dashboard/settings", label: "Settings" },
@@ -108,6 +112,15 @@ export default function Sidebar({ collapsed }: Props) {
     navigate("/login");
   };
 
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
+
+  const toggleMenu = (label: string) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [label]: !prev[label],
+    }));
+  };
+
   return (
     <aside
       className={`fixed inset-y-0 left-0 bg-white border-r border-gray-200 flex flex-col ${
@@ -131,34 +144,118 @@ export default function Sidebar({ collapsed }: Props) {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto px-4 pb-4">
         <div className="space-y-1">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) =>
-                `group relative flex items-center gap-3 px-4 py-3 my-1 rounded-xl text-sm font-medium transition-all ${
-                  isActive
-                    ? "bg-purple-50 text-purple-700 shadow-sm"
-                    : "text-gray-600 hover:bg-gray-50"
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  {/* Active indicator bar */}
-                  {isActive && (
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-r-full" />
-                  )}
-                  {item.icon}
-                  {!collapsed && <span>{item.label}</span>}
-                  {isActive && !collapsed && (
+          {navItems.map((item) => {
+            const hasSubItems = !!item.subItems?.length;
+            const isOpen = openMenus[item.label];
+            return (
+              <div key={item.to}>
+                {/* Parent Item */}
+                <div
+                  className={`group relative flex items-center gap-3 px-4 py-3 my-1 rounded-xl text-sm font-medium transition-all cursor-pointer
+              ${hasSubItems ? "hover:bg-gray-50" : ""}
+            `}
+                  onClick={() => hasSubItems && toggleMenu(item.label)}
+                >
+                  {/* Active indicator bar (only if exact match or child is active) */}
+                  <NavLink
+                    to={item.to}
+                    end={item.end}
+                    className="absolute inset-0 rounded-xl"
+                    // This helps detect if parent route is active
+                  >
+                    {({ isActive }) =>
+                      isActive && (
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-r-full" />
+                      )
+                    }
+                  </NavLink>
+
+                  <div className="flex items-center gap-3 w-full text-purple-700">
+                    {item.icon}
+                    {!collapsed && (
+                      <>
+                        <span className="flex-1 text-start text-purple-700">{item.label}</span>
+                        {hasSubItems && (
+                          <ChevronDown
+                            className={`h-4 w-4 transition-transform duration-200 ${
+                              isOpen ? "rotate-180" : ""
+                            }`}
+                          />
+                        )}
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                {/* Sub Items - Only show when expanded and sidebar not collapsed */}
+                {hasSubItems && !collapsed && isOpen && (
+                  <div className="ml-9 space-y-1 mt-1 border-l-2 border-gray-200 pl-4">
+                    {item.subItems!.map((subItem) => (
+                      <NavLink
+                        key={subItem.to}
+                        to={subItem.to}
+                        end={subItem.end}
+                        className={({ isActive }) =>
+                          `block py-2 px-3 text-sm rounded-lg transition-all text-start ${
+                            isActive
+                              ? "bg-purple-50 text-purple-700 font-medium"
+                              : "text-gray-600 hover:bg-gray-50"
+                          }`
+                        }
+                      >
+                        {subItem.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) =>
+                  `group relative flex items-center gap-3 px-4 py-3 my-1 rounded-xl text-sm font-medium transition-all ${
+                    isActive
+                      ? "bg-purple-50 text-purple-700 shadow-sm"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    {/* Active indicator bar */}
+                    {isActive && (
+                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-r-full" />
+                    )}
+                    {item.icon}
+                    {!collapsed && (
+                      <span className="text-start">{item.label}</span>
+                    )}
+                    {!collapsed && item.subItems ? (
+                      <ChevronDown className="h-5 w-5"></ChevronDown>
+                    ) : (
+                      <div></div>
+                    )}
+                    {/* {isActive && !collapsed && (
                     <div className="ml-auto w-2 h-2 bg-purple-600 rounded-full" />
-                  )}
-                </>
-              )}
-            </NavLink>
-          ))}
+                  )} */}
+                    {isActive &&
+                      item.subItems?.map((itemChild) => (
+                        <NavLink
+                          key={itemChild.to}
+                          to={itemChild.to}
+                          className="group relative flex items-center"
+                        >
+                          {itemChild.label}
+                        </NavLink>
+                      ))}
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
         </div>
       </nav>
 

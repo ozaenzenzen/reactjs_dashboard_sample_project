@@ -71,8 +71,31 @@ const router = createBrowserRouter([
             element: <h1 className="title">New Product</h1>,
           },
           { path: "inventory", element: <h1 className="title">Inventory</h1> },
-          { path: "event-management", element: <h1 className="title">Event Management</h1> },
-          { path: "user-management", element: <h1 className="title">User Management</h1> },
+          {
+            path: "event-management",
+            element: <h1 className="title">Event Management</h1>,
+            children: [
+              {
+                path: "configuration",
+                element: <h1 className="title">Configuration</h1>,
+              },
+              {
+                path: "category",
+                element: <h1 className="title">Category</h1>,
+              },
+              { path: "publish", element: <h1 className="title">Publish</h1> },
+              { path: "report", element: <h1 className="title">Report</h1> },
+              { path: "live", element: <h1 className="title">Live</h1> },
+            ],
+          },
+          {
+            path: "user-management",
+            element: <h1 className="title">User Management</h1>,
+            children: [
+              { path: "user", element: <h1 className="title">User</h1> },
+              { path: "role", element: <h1 className="title">Role</h1> },
+            ],
+          },
           { path: "settings", element: <h1 className="title">Settings</h1> },
         ],
       },
@@ -103,6 +126,28 @@ const router2 = createBrowserRouter([
       { path: "new-product", element: <h1 className="title">New Product</h1> },
       { path: "inventory", element: <h1 className="title">Inventory</h1> },
       { path: "settings", element: <h1 className="title">Settings</h1> },
+      {
+        path: "event-management",
+        element: <h1 className="title">Event Management</h1>,
+        children: [
+          {
+            path: "configuration",
+            element: <h1 className="title">Configuration</h1>,
+          },
+          { path: "category", element: <h1 className="title">Category</h1> },
+          { path: "publish", element: <h1 className="title">Publish</h1> },
+          { path: "report", element: <h1 className="title">Report</h1> },
+          { path: "live", element: <h1 className="title">Live</h1> },
+        ],
+      },
+      {
+        path: "user-management",
+        element: <h1 className="title">User Management</h1>,
+        children: [
+          { path: "user", element: <h1 className="title">User</h1> },
+          { path: "role", element: <h1 className="title">Role</h1> },
+        ],
+      },
     ],
   },
 ]);
