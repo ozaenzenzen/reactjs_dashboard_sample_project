@@ -1,6 +1,5 @@
-// src/components/Sidebar.tsx
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Menu,
   Bell,
@@ -18,48 +17,56 @@ import {
 } from "lucide-react"; // optional: lucide icons
 
 type NavItem = {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   to: string;
   label: string;
   end?: boolean;
-  subItems?: { to: string; label: string; end?: boolean }[];
+  subItems?: NavItem[];
 };
 
 const navItems: NavItem[] = [
   { icon: <ChartBar />, to: "/dashboard", label: "Overview", end: true },
-  { icon: <ChartArea />, to: "/dashboard/analytics", label: "Analytics" },
-  {
-    icon: <ReceiptPoundSterling />,
-    to: "/dashboard/reports",
-    label: "Reports",
-  },
-  { icon: <PersonStanding />, to: "/dashboard/customers", label: "Customers" },
-  {
-    icon: <PersonStanding />,
-    to: "/dashboard/new-customer",
-    label: "New Customer",
-  },
-  {
-    icon: <PersonStanding />,
-    to: "/dashboard/verified-customers",
-    label: "Verified Customers",
-  },
-  { icon: <BoxIcon />, to: "/dashboard/products", label: "Products" },
-  { icon: <BoxIcon />, to: "/dashboard/new-product", label: "New Product" },
-  { icon: <BoxIcon />, to: "/dashboard/inventory", label: "Inventory" },
+
   {
     icon: <Settings2 />,
     to: "/dashboard/event-management",
     label: "Event Management",
     subItems: [
       {
-        to: "/dashboard/event-management/configuration",
-        label: "Configuration",
+        to: "/dashboard/event-management/all-event",
+        label: "All Event",
       },
-      { to: "/dashboard/event-management/category", label: "Category" },
-      { to: "/dashboard/event-management/publish", label: "Publish" },
-      { to: "/dashboard/event-management/report", label: "Report" },
-      { to: "/dashboard/event-management/live", label: "Live" },
+      {
+        to: "/dashboard/event-management/create-new-event",
+        label: "Create New Event",
+      },
+      { to: "/dashboard/event-management/categories", label: "Category" },
+      {
+        to: "/dashboard/event-management/reports",
+        label: "Report",
+        subItems: [
+          {
+            to: "/dashboard/event-management/reports/participation",
+            label: "Participation",
+          },
+          {
+            to: "/dashboard/event-management/reports/tournament-overview",
+            label: "Tournament Overview",
+          },
+          {
+            to: "/dashboard/event-management/reports/player-performance",
+            label: "Player Performance",
+          },
+          {
+            to: "/dashboard/event-management/reports/category-popularity",
+            label: "Category Popularity",
+          },
+          {
+            to: "/dashboard/event-management/reports/team-ranking",
+            label: "Team Ranking",
+          },
+        ],
+      },
     ],
   },
   {
@@ -68,86 +75,60 @@ const navItems: NavItem[] = [
     label: "User Management",
     subItems: [
       { to: "/dashboard/user-management/user", label: "User" },
-      { to: "/dashboard/user-management/role", label: "Role" },
+      { to: "/dashboard/user-management/role", label: "Roles & Permission" },
     ],
   },
   { icon: <Settings2 />, to: "/dashboard/settings", label: "Settings" },
+  { icon: <ChartArea />, to: "/dashboard/audit-trail", label: "Audit Trail" },
 ] as const;
-
-// const navItems: readonly NavItem[] = [
-//   { icon: <ChartBar />, to: "/dashboard", label: "Overview", end: true },
-//   { icon: <ChartArea />, to: "/dashboard/analytics", label: "Analytics" },
-//   {
-//     icon: <ReceiptPoundSterling />,
-//     to: "/dashboard/reports",
-//     label: "Reports",
-//   },
-//   { icon: <PersonStanding />, to: "/dashboard/customers", label: "Customers" },
-//   {
-//     icon: <PersonStanding />,
-//     to: "/dashboard/new-customer",
-//     label: "New Customer",
-//   },
-//   {
-//     icon: <PersonStanding />,
-//     to: "/dashboard/verified-customers",
-//     label: "Verified Customers",
-//   },
-//   { icon: <BoxIcon />, to: "/dashboard/products", label: "Products" },
-//   { icon: <BoxIcon />, to: "/dashboard/new-product", label: "New Product" },
-//   { icon: <BoxIcon />, to: "/dashboard/inventory", label: "Inventory" },
-//   { icon: <Settings2 />, to: "/dashboard/settings", label: "Settings" },
-// ] as const;
 
 type Props = {
   collapsed: boolean;
 };
 
 export default function Sidebar({ collapsed }: Props) {
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     navigate("/login");
   };
 
-  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
-
-  const toggleMenu = (label: string) => {
+  // const toggleMenu = (label: string) => {
+  //   setOpenMenus((prev) => ({
+  //     ...prev,
+  //     [label]: !prev[label],
+  //   }));
+  // };
+  const toggleMenu = (key: string) => {
     setOpenMenus((prev) => ({
       ...prev,
-      [label]: !prev[label],
+      [key]: !prev[key],
     }));
   };
 
-  return (
-    <aside
-      className={`fixed inset-y-0 left-0 bg-white border-r border-gray-200 flex flex-col ${
-        collapsed ? "w-24" : "w-64"
-      }`}
-    >
-      <div className="p-6 shrink-0">
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white text-2xl font-bold">E</span>
-          </div>
-          {!collapsed && (
-            <span className="text-xl font-semibold text-gray-900">
-              Event Management Sports
-            </span>
-          )}
-        </div>
-      </div>
+  const NavItemComponent = ({
+    item,
+    depth = 0,
+  }: {
+    item: NavItem;
+    depth?: number;
+  }) => {
+    // const hasSubItems = !!item.subItems?.length;
+    // const isOpen = openMenus[item.to];
+    // const isActive =
+    //   location.pathname === item.to ||
+    //   location.pathname.startsWith(item.to + "/");
+    const hasSubItems = !!item.subItems?.length;
+    const isOpen = openMenus[item.label];
+    const isActive =
+      location.pathname === item.to ||
+      (hasSubItems && location.pathname.startsWith(item.to + "/"));
 
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-4 pb-4">
-        <div className="space-y-1">
-          {navItems.map((item) => {
-            const hasSubItems = !!item.subItems?.length;
-            const isOpen = openMenus[item.label];
-            return (
+    return (
               <div key={item.to}>
                 {/* Parent Item */}
                 <div
@@ -210,51 +191,95 @@ export default function Sidebar({ collapsed }: Props) {
                 )}
               </div>
             );
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.end}
-                className={({ isActive }) =>
-                  `group relative flex items-center gap-3 px-4 py-3 my-1 rounded-xl text-sm font-medium transition-all ${
-                    isActive
-                      ? "bg-purple-50 text-purple-700 shadow-sm"
-                      : "text-gray-600 hover:bg-gray-50"
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    {/* Active indicator bar */}
-                    {isActive && (
-                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-r-full" />
-                    )}
-                    {item.icon}
-                    {!collapsed && (
-                      <span className="text-start">{item.label}</span>
-                    )}
-                    {!collapsed && item.subItems ? (
-                      <ChevronDown className="h-5 w-5"></ChevronDown>
-                    ) : (
-                      <div></div>
-                    )}
-                    {/* {isActive && !collapsed && (
-                    <div className="ml-auto w-2 h-2 bg-purple-600 rounded-full" />
-                  )} */}
-                    {isActive &&
-                      item.subItems?.map((itemChild) => (
-                        <NavLink
-                          key={itemChild.to}
-                          to={itemChild.to}
-                          className="group relative flex items-center"
-                        >
-                          {itemChild.label}
-                        </NavLink>
-                      ))}
-                  </>
-                )}
-              </NavLink>
-            );
+
+    return (
+      <div>
+        {/* ===== Parent Item ===== */}
+        <div
+          className={`
+          group relative flex items-center gap-3 px-4 py-3 my-1 rounded-xl text-sm font-medium transition-all cursor-pointer
+          ${
+            isActive
+              ? "bg-purple-50 text-purple-700"
+              : "text-gray-700 hover:bg-gray-50"
+          }
+        `}
+          style={{ paddingLeft: 16 + depth * 12 }}
+          // onClick={() => hasSubItems && toggleMenu(item.to)}
+          onClick={() => {
+            if (hasSubItems) toggleMenu(item.to);
+          }}
+        >
+          {/* Active Indicator */}
+          {isActive && (
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-r-full" />
+          )}
+
+          {/* If NO subItems -> click navigates */}
+          {/* {!hasSubItems && (
+            <NavLink to={item.to} end={item.end} className="absolute inset-0" />
+          )} */}
+          <NavLink to={item.to} end={item.end} className="absolute inset-0" />
+
+          {/* Icon */}
+          {item.icon && (
+            <div className={collapsed ? "mx-auto" : ""}>{item.icon}</div>
+          )}
+
+          {/* Label + Chevron */}
+          {!collapsed && (
+            <div className="flex items-center justify-between flex-1">
+              <span className="truncate">{item.label}</span>
+              {hasSubItems && (
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
+                />
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* ===== CHILDREN (RECURSIVE) ===== */}
+        {hasSubItems && !collapsed && isOpen && (
+          <div className="mt-1 space-y-1">
+            {item.subItems!.map((sub) => (
+              <NavItemComponent key={sub.to} item={sub} depth={depth + 1} />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <aside
+      className={`fixed inset-y-0 left-0 z-40 flex flex-col  bg-white border-r border-gray-200 transition-all duration-200 ${
+        collapsed ? "w-24" : "w-64"
+      }`}
+    >
+      <div className="p-6 shrink-0">
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+            <span className="text-white text-2xl font-bold">E</span>
+          </div>
+          {!collapsed && (
+            <span className="text-xl font-semibold text-gray-900">
+              Event Management Sports
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto px-3 py-4">
+        <div className="space-y-1">
+          {navItems.map((item) => {
+            // const hasSubItems = !!item.subItems?.length;
+            // const isOpen = openMenus[item.label];
+            return <NavItemComponent key={item.to} item={item} />;
           })}
         </div>
       </nav>
@@ -322,37 +347,3 @@ export default function Sidebar({ collapsed }: Props) {
     </aside>
   );
 }
-
-// type NavItem = { to: string; label: string; end?: boolean };
-
-// interface SidebarProps {
-//   items: NavItem[];
-// }
-
-// export default function Sidebar({ items }: SidebarProps) {
-//   return (
-//     <aside className="w-64 bg-white shadow-md">
-//       <div className="p-6">
-//         <h2 className="text-lg font-semibold text-gray-800">Dashboard</h2>
-//       </div>
-//       <nav className="mt-6">
-//         {items.map((item) => (
-//           <NavLink
-//             key={item.to}
-//             to={`/dashboard/${item.to}`}
-//             end={item.end}
-//             className={({ isActive }) =>
-//               `block px-6 py-3 text-sm font-medium transition-colors ${
-//                 isActive
-//                   ? "bg-indigo-50 text-indigo-700 border-r-4 border-indigo-600"
-//                   : "text-gray-600 hover:bg-gray-50"
-//               }`
-//             }
-//           >
-//             {item.label}
-//           </NavLink>
-//         ))}
-//       </nav>
-//     </aside>
-//   );
-// }
