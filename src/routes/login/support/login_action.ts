@@ -9,7 +9,8 @@ export async function loginAction({ request }: { request: Request }) {
   // Fake login
   if (email === "user@example.com" && password === "password") {
     localStorage.setItem("isLoggedIn", "true");
-    const redirectTo = formData.get("redirect") || "/dashboard";
+    const redirectTo = formData.get("redirect") || "/overview";
+    // const redirectTo = formData.get("redirect") || "/dashboard";
     throw redirect(redirectTo as string);
   }
 

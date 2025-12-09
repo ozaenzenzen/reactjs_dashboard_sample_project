@@ -7,7 +7,8 @@ export async function registerAction() {
   // Simulate registration
   await new Promise((r) => setTimeout(r, 500));
   localStorage.setItem("isLoggedIn", "true");
-  throw redirect("/dashboard");
+  throw redirect("/overview");
+  // throw redirect("/dashboard");
 }
 
 export default function RegisterPage() {
