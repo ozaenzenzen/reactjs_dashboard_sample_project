@@ -36,9 +36,15 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      <div className="flex flex-row">
+        <div className="bg-white rounded-[9px] border border-gray-300 shadow-lg p-5">
+          <h1 className="text-2xl text-black">Child 1</h1>
+        </div>
+      </div>
+
       {/* Add more sections to fill width */}
       <div className="w-full bg-gray-50 p-6 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
+        <h2 className="text-xl font-semibold mb-4 text-black">Recent Activity</h2>
         <p className="text-gray-600">No recent activity.</p>
       </div>
     </div>

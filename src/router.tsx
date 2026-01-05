@@ -1,6 +1,6 @@
 import { redirect, createBrowserRouter } from "react-router-dom";
 import RootLayout from "./routes/layout";
-import DashboardLayout from "./routes/dashboard/dashboard_layout";
+import DashboardLayout from "./routes/dashboard/DashboardLayout";
 
 import DashboardPage, {
   dashboardLoader,
@@ -13,6 +13,8 @@ import NotFoundPage from "./routes/NotFoundPage";
 import EventManagementLayout from "./routes/dashboard/event_management/EventManagementLayout";
 import UserManagementLayout from "./routes/dashboard/user_management/UserManagementLayout";
 import EventReportLayout from "./routes/dashboard/event_management/EventReportLayout";
+import EventManagementPage from "./routes/dashboard/event_management/EventManagementPage";
+import EventManagementAllEventPage from "./routes/dashboard/event_management/EventManagementAllEventPage";
 
 // Fake auth
 const getAuth = () => localStorage.getItem("isLoggedIn") === "true";
@@ -67,20 +69,11 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: (
-                  <div>
-                    <h1 className="text-2xl font-bold text-gray-900">
-                      Event Management Page
-                    </h1>
-                    <p className="mt-2 text-gray-600">
-                      Welcome to event management page
-                    </p>
-                  </div>
-                ),
+                element: <EventManagementPage/>,
               },
               {
                 path: "all-event",
-                element: <h1 className="title">All Event</h1>,
+                element: <EventManagementAllEventPage/>,
               },
               {
                 path: "create-new-event",
@@ -203,20 +196,11 @@ const router2 = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: (
-                  <div>
-                    <h1 className="text-2xl font-bold text-gray-900">
-                      Event Management Page
-                    </h1>
-                    <p className="mt-2 text-gray-600">
-                      Welcome to event management page
-                    </p>
-                  </div>
-                ),
+                element: <EventManagementPage/>,
               },
               {
                 path: "all-event",
-                element: <h1 className="title">All Event</h1>,
+                element: <h1 className="title">All Events</h1>,
               },
               {
                 path: "create-new-event",

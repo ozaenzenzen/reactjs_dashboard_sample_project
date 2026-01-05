@@ -59,8 +59,8 @@ const navItems: NavItem[] = [
     ],
   },
 
-  { icon: <Settings2 />, to: "/settings", label: "Settings" },
   { icon: <ChartArea />, to: "/audit-trail", label: "Audit Trail" },
+  { icon: <Settings2 />, to: "/settings", label: "Settings" },
 ];
 
 
@@ -119,8 +119,8 @@ const navItems2: NavItem[] = [
       { to: "/dashboard/user-management/role", label: "Roles & Permission" },
     ],
   },
-  { icon: <Settings2 />, to: "/dashboard/settings", label: "Settings" },
   { icon: <ChartArea />, to: "/dashboard/audit-trail", label: "Audit Trail" },
+  { icon: <Settings2 />, to: "/dashboard/settings", label: "Settings" },
 ] as const;
 
 type Props = {

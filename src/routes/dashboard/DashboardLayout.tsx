@@ -1,10 +1,6 @@
 // src/layouts/DashboardLayout.tsx
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useState } from "react";
-
-import { useNavigate } from "react-router-dom";
-import AppHeader from "./AppHeader";
-import Header from "./Header";
 import HeaderV2 from "./Header";
 import Sidebar from "./Sidebar";
 
